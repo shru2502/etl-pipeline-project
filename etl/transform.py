@@ -1,6 +1,6 @@
-from typing import List, Dict
+from typing import List
 import pandas as pd
-from bson.objectid import ObjectId
+from bson import ObjectId
 
 def transform_clients(clients: List[dict]) -> List[dict]:
     """
@@ -74,14 +74,17 @@ def transform_sonar_results(sonar_results: List[dict]) -> List[dict]:
     """
     transformed = []
     for result in sonar_results:
-        transformed.append({
-            "id": str(result["_id"]),
-            "sonar_run_id": str(result.get("sonar_run_id")),
-            "part_id": result.get("part_id"),
-            "supplier_id": str(result.get("supplier_id")),
-            "price": float(result.get("price")),
-            "lead_time": int(result.get("lead_time")),
-            "timestamp": pd.to_datetime(result.get("timestamp"))
-            # Add other relevant fields
-        })
+        try:
+            # Ensure that ObjectId is converted to string for any field
+            transformed.append({
+                "id": str(result.get("_id", "")) if isinstance(result.get("_id"), ObjectId) else str(result.get("_id", "")),
+                "sonar_run_id": str(result.get("sonar_run_id", "")) if isinstance(result.get("sonar_run_id"), ObjectId) else str(result.get("sonar_run_id", "")),
+                "part_id": str(result.get("part_id", "")) if isinstance(result.get("part_id"), ObjectId) else str(result.get("part_id", "")),
+                "supplier_id": str(result.get("supplier_id", "")) if isinstance(result.get("supplier_id"), ObjectId) else str(result.get("supplier_id", "")),
+                "price": float(result.get("price") or 0.0),
+                "lead_time": int(result.get("lead_time", 0)),
+                "timestamp": pd.to_datetime(result.get("timestamp"), errors="coerce"),
+            })
+        except Exception as e:
+            print(f"Error transforming document {result}: {e}")
     return transformed
