@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from typing import dict, List
+from typing import Dict, List
 
 def get_mongo_client(uri: str = "mongodb://localhost:27017/") -> MongoClient:
     """
@@ -14,7 +14,7 @@ def get_mongo_client(uri: str = "mongodb://localhost:27017/") -> MongoClient:
     client = MongoClient(uri)
     return client
 
-def extract_collection(client: MongoClient, db_name: str, collection_name: str) -> List[dict]:
+def extract_collection(client: MongoClient, db_name: str, collection_name: str) -> List[Dict]:
     """
     Extracts all documents from a specified MongoDB collection.
 
@@ -24,7 +24,7 @@ def extract_collection(client: MongoClient, db_name: str, collection_name: str) 
         collection_name (str): Name of the collection.
 
     Returns:
-        List[dict]: List of documents.
+        List[Dict]: List of documents.
     """
     db = client[db_name]
     collection = db[collection_name]
