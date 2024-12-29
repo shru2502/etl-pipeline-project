@@ -1,16 +1,18 @@
-from extract import get_mongo_client, extract_collection
-from transform import (
+# etl/pipeline.py
+from etl.extract import get_mongo_client, extract_collection
+from etl.transform import (
     transform_clients,
     transform_suppliers,
     transform_sonar_runs,
     transform_sonar_results
 )
-from load import get_postgres_connection, load_data
+from etl.load import get_postgres_connection, load_data
+from . import MONGO_URI, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT
 
 def run_etl():
     # MongoDB connection
-    mongo_client = get_mongo_client("mongodb://localhost:27017/")
-    db_name = "MarktPilotDB"
+    mongo_client = get_mongo_client(MONGO_URI)
+    db_name = "markt_pilot"
     
     # Extract
     clients = extract_collection(mongo_client, db_name, "clients")
@@ -25,13 +27,7 @@ def run_etl():
     transformed_sonar_results = transform_sonar_results(sonar_results)
     
     # Load
-    postgres_conn = get_postgres_connection(
-        dbname="MarktPilotDB",
-        user="postgres",
-        password="postgres",
-        host="localhost",
-        port="5432"
-    )
+    postgres_conn = get_postgres_connection()
     
     load_data(postgres_conn, "clients", transformed_clients)
     load_data(postgres_conn, "suppliers", transformed_suppliers)

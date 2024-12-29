@@ -1,27 +1,22 @@
+# etl/load.py
 from typing import List, Dict
 import psycopg2
 from psycopg2.extras import execute_values
+from . import POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT  # Import PostgreSQL config
 
-def get_postgres_connection(dbname: str, user: str, password: str, host: str = "localhost", port: str = "5432"):
+def get_postgres_connection() -> psycopg2.extensions.connection:
     """
-    Establishes a connection to the PostgreSQL database.
-
-    Args:
-        dbname (str): Database name.
-        user (str): Username.
-        password (str): Password.
-        host (str): Host address.
-        port (str): Port number.
+    Establishes a connection to the PostgreSQL database using credentials from the config.
 
     Returns:
         connection: PostgreSQL connection object.
     """
     conn = psycopg2.connect(
-        dbname=dbname,
-        user=user,
-        password=password,
-        host=host,
-        port=port
+        dbname=POSTGRES_DB,
+        user=POSTGRES_USER,
+        password=POSTGRES_PASSWORD,
+        host=POSTGRES_HOST,
+        port=POSTGRES_PORT
     )
     return conn
 

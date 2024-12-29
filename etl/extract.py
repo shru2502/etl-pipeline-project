@@ -1,7 +1,9 @@
+# etl/extract.py
 from pymongo import MongoClient
-from typing import Dict, List
+from typing import List, Dict
+from . import MONGO_URI  # Import MONGO_URI from __init__.py
 
-def get_mongo_client(uri: str = "mongodb://localhost:27017/") -> MongoClient:
+def get_mongo_client(uri: str = MONGO_URI) -> MongoClient:
     """
     Establishes a connection to the MongoDB server.
 
@@ -14,7 +16,7 @@ def get_mongo_client(uri: str = "mongodb://localhost:27017/") -> MongoClient:
     client = MongoClient(uri)
     return client
 
-def extract_collection(client: MongoClient, db_name: str, collection_name: str) -> List[Dict]:
+def extract_collection(client: MongoClient, db_name: str, collection_name: str) -> List[dict]:
     """
     Extracts all documents from a specified MongoDB collection.
 
@@ -24,7 +26,7 @@ def extract_collection(client: MongoClient, db_name: str, collection_name: str) 
         collection_name (str): Name of the collection.
 
     Returns:
-        List[Dict]: List of documents.
+        List[dict]: List of documents.
     """
     db = client[db_name]
     collection = db[collection_name]
