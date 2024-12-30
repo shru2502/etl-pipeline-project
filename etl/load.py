@@ -2,7 +2,7 @@
 from typing import List, Dict
 import psycopg2
 from psycopg2.extras import execute_values
-from . import POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT  # Import PostgreSQL config
+from __init__ import POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT  # Import PostgreSQL config
 
 def get_postgres_connection() -> psycopg2.extensions.connection:
     """

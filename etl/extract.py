@@ -1,7 +1,7 @@
 # etl/extract.py
 from pymongo import MongoClient
 from typing import List, Dict
-from . import MONGO_URI  # Import MONGO_URI from __init__.py
+from __init__ import MONGO_URI  # Import MONGO_URI from __init__.py
 
 def get_mongo_client(uri: str = MONGO_URI) -> MongoClient:
     """

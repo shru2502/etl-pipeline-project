@@ -7,7 +7,7 @@ from etl.transform import (
     transform_sonar_results
 )
 from etl.load import get_postgres_connection, load_data
-from . import MONGO_URI, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT
+from __init__ import MONGO_URI, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT
 
 def run_etl():
     # MongoDB connection

@@ -1,16 +1,18 @@
-etl_project/
+MarktPilot/
 ├── etl_env/                # Virtual environment (auto-created, do not modify)
-├── data/                   # Raw JSON data files
+├── data/collections.zip/                   # Raw JSON data files
 │   ├── clients.json
 │   ├── suppliers.json
 │   ├── sonar_runs.json
 │   └── sonar_results.json
-├── src/                    # Source code folder
+├── etl/                    # Source code folder
+|   ├── __init__.py		  # Load environment variables from .env file
 │   ├── extract.py          # Code to extract data from MongoDB
 │   ├── transform.py        # Code to transform data using pandas
 │   ├── load.py             # Code to load data into PostgreSQL
-│   ├── config.py           # Configuration details (e.g., DB credentials)
-│   └── main.py             # Entry point for the ETL process
+│   └── pipeline.py         # Entry point for the ETL process
+├── scripts/	
+|    ├── setup_db.py		  # Connect postgres DB and create tables
 ├── tests/                  # Unit tests for the ETL pipeline
 ├── requirements.txt        # Python libraries required for the project
 ├── README.md               # Documentation for the project
